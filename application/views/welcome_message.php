@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
 	<meta charset="utf-8">
 	<title>Flickr Project - Recent Photos API Integration using cUR</title>
-
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<style type="text/css">
 
 	::selection { background-color: #E13300; color: white; }
@@ -64,6 +64,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		box-shadow: 0 0 8px #D0D0D0;
 	}
 	</style>
+	<script>
+	$( document ).ready(function() {
+		$( ".preview" ).on( "click", function() {
+			var photo_id = $(this).attr('id');
+			var photo_src = $(this).attr('photo_src');
+			var photo_label = $(this).attr('alt');
+			
+			$('#img_'+photo_id).attr('src', photo_src );
+			$('#h2_'+photo_id).html(photo_label + ' Size');
+		});	
+	});
+	</script>
 </head>
 <body>
 
@@ -86,7 +98,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 				?>
 				
-				<img class="img_image" src='<?php echo $thumbnail_src;?>'> </br> 
+				<img class="img_image" id='img_<?php echo $photo['id'];?>' title ="Click Here" src='<?php echo $thumbnail_src;?>'> </br>
 				<span id="span_<?php echo $photo['id'];?>" class="span_size">
 					<b>Sizes:</b> <?php echo rtrim($size_string,"| ");?> 
 				</span>
