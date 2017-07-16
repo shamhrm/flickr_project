@@ -44,12 +44,56 @@ class Flickr_model extends CI_Model {
 
 		$rsp_obj = unserialize($rsp);
 		
-		return $rsp_obj;
+		if (!empty($rsp_obj['photos']['photo'])){
+			foreach ($rsp_obj['photos']['photo'] as $photo_key => $photo_val) {
+				$sizesphotos = $this->getSizesphotos($params['api_key'], $photo_val['id']);
+				$rsp_obj['photos']['photo'][$photo_key]['Sizesphotos'] = $sizesphotos;		
+			}
+		}
+		
+		if($rsp_obj['stat'] == "ok"){
+			return $rsp_obj['photos']['photo'];
+		} else {	
+			return "API Error";
+		}
 	}
 	
 	
-	public function getSizesphotos() 
+	public function getSizesphotos($api_key, $photo_id) 
 	{
+		$params = array(
+			'api_key'	=> $api_key,
+			'method'	=> 'flickr.photos.getSizes',
+			'format'	=> 'php_serial',
+			'photo_id' => $photo_id
+		);
+
+		$encoded_params = array();
+
+		foreach ($params as $k => $v){
+
+			$encoded_params[] = urlencode($k).'='.urlencode($v);
+		}
+
+		#
+		# call the API and decode the response
+		#
+
+		$url = "https://api.flickr.com/services/rest/?".implode('&', $encoded_params);
+
+		$ch = curl_init(); 
+		curl_setopt($ch, CURLOPT_URL, $url); 
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		$rsp = curl_exec($ch); 
+		curl_close($ch);
+
+		$rsp_obj = unserialize($rsp);
 		
+		if($rsp_obj['stat'] == "ok"){
+			return $rsp_obj['sizes']['size'];
+		} else {	
+			return "API Error";
+		}
 	}
 }
