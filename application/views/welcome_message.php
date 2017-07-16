@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Flickr Project - Recent Photos API Integration using cUR</title>
+	<title>Flickr Project - Recent Photos API Integration using cURL</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<style type="text/css">
 
@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	body {
 		background-color: #fff;
-		margin: 40px;
+		margin: 5px;
 		font: 13px/20px normal Helvetica, Arial, sans-serif;
 		color: #4F5155;
 	}
@@ -27,11 +27,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	h1 {
 		color: #444;
 		background-color: transparent;
+		/*border-bottom: 1px solid #D0D0D0;*/
+		font-size: 19px;
+		font-weight: normal;
+		margin: 0 0 14px 0;
+		padding: 14px 15px 10px 0px;
+	}
+	
+	h2 {
+		color: #444;
+		background-color: transparent;
 		border-bottom: 1px solid #D0D0D0;
 		font-size: 19px;
 		font-weight: normal;
 		margin: 0 0 14px 0;
-		padding: 14px 15px 10px 15px;
+		padding: 0px 0px 5px 0px;
 	}
 
 	code {
@@ -52,16 +62,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	p.footer {
 		text-align: right;
 		font-size: 11px;
-		border-top: 1px solid #D0D0D0;
+		/*border-top: 1px solid #D0D0D0;*/
 		line-height: 32px;
 		padding: 0 10px 0 10px;
 		margin: 20px 0 0 0;
 	}
 
 	#container {
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	#container_inner {
 		margin: 10px;
 		border: 1px solid #D0D0D0;
 		box-shadow: 0 0 8px #D0D0D0;
+		padding: 10px;
 	}
 	</style>
 	<script>
@@ -72,34 +88,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var photo_label = $(this).attr('alt');
 			
 			$('#img_'+photo_id).attr('src', photo_src );
-			$('#h2_'+photo_id).html(photo_label + ' Size');
-		});	
+
+			//$('.div_image').dialog();
+		});
+			
 	});
 	</script>
 </head>
 <body>
 
 <div id="container">
-	<h1>Flickr Project - 'Recent Photos' API Integration using cURL</h1>
-
+	<center><h1>Flickr Project - 'Recent Photos' API Integration using cURL</h1></center>
 	<div id="body">
 		<?php
 		foreach($recentphotos as $photo){
 			?><div id="container_inner"><?php
+				$cnt = 0;
 				$thumbnail_src = "";
 				$size_string = "";
 				foreach($photo['Sizesphotos'] as $sizesphotos){
-					$size_string .= '<a class="preview" href="JavaScript:Void(0);" id="'.$photo['id'].'" photo_src = "'.$sizesphotos['source'].'" alt = "'.$sizesphotos['label'].'" >'.$sizesphotos['label']. '</a> ('.$sizesphotos['width'].'x'.$sizesphotos['height'].') | ';
-					
-					 if($sizesphotos['label'] == "Thumbnail") {
-						$thumbnail_src =  $sizesphotos['source'];
-					 }
+				 $size_string .= '<a class="preview" href="JavaScript:Void(0);" id="'.$photo['id'].'" photo_src = "'.$sizesphotos['source'].'" alt = "'.$sizesphotos['label'].'" >'.$sizesphotos['label']. '</a> ('.$sizesphotos['width'].'x'.$sizesphotos['height'].') | ';
+					 
+				 if($sizesphotos['label'] == "Thumbnail") {
+					$thumbnail_src =  $sizesphotos['source'];
+				 }
 				 
 				}
 				?>
 				
-				<img class="img_image" id='img_<?php echo $photo['id'];?>' title ="Click Here" src='<?php echo $thumbnail_src;?>'> </br>
-				<span id="span_<?php echo $photo['id'];?>" class="span_size">
+				<img class="img_image" id='img_<?php echo $photo['id'];?>' title ="Click Here" src='<?php echo $thumbnail_src;?>'> </br> 
+				<span id="span_<?php echo $photo['id'];?>">
 					<b>Sizes:</b> <?php echo rtrim($size_string,"| ");?> 
 				</span>
 			</div><?
