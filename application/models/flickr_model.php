@@ -1,5 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-
+/* 
+* @[This class is model used for Flickr Project - 'Recent Photos' API Integration using cURL]
+* @author Sham H on 16th July 2017
+* @link 
+*/ 
 class Flickr_model extends CI_Model {
 
 	function __construct()
@@ -9,6 +13,12 @@ class Flickr_model extends CI_Model {
 		
     }
 	
+	/* 
+	* @[This function is used to get Recent Photos using Flickr API]
+	* @author Sham H on 16th July 2017
+	* @param none
+	* @retrun array
+	*/
 	public function getRecentphotos() 
 	{	
 		#
@@ -59,6 +69,12 @@ class Flickr_model extends CI_Model {
 	}
 	
 	
+	/* 
+	* @[This function is used to get Size of Photo using Flickr API]
+	* @author Sham H on 16th July 2017
+	* @param $api_key, $photo_id
+	* @retrun array
+	*/
 	public function getSizesphotos($api_key, $photo_id) 
 	{
 		$params = array(
