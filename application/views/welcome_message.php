@@ -79,6 +79,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		box-shadow: 0 0 8px #D0D0D0;
 		padding: 10px;
 	}
+	
+	.span_size {
+		display: none;		
+	}
+	
+	.span_size_name {
+		font-size: 13px;
+	}
 	</style>
 	<script>
 	$( document ).ready(function() {
@@ -88,8 +96,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var photo_label = $(this).attr('alt');
 			
 			$('#img_'+photo_id).attr('src', photo_src );
-
-			//$('.div_image').dialog();
+			$('#h2_'+photo_id).html(photo_label + ' Size');
+		});
+		
+		$( ".img_image" ).on( "click", function() {
+			var photo_id = $(this).attr('id').replace("img_", "");;
+			$('#span_'+photo_id).toggle();
 		});
 			
 	});
@@ -115,18 +127,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				 
 				}
 				?>
-				
+				<h2>
+					<?php echo $photo['title'];?> : <span class="span_size_name" id="h2_<?php echo $photo['id'];?>">Thumbnail Size</span>
+				</h2>
 				<img class="img_image" id='img_<?php echo $photo['id'];?>' title ="Click Here" src='<?php echo $thumbnail_src;?>'> </br> 
-				<span id="span_<?php echo $photo['id'];?>">
+				<span id="span_<?php echo $photo['id'];?>" class="span_size">
 					<b>Sizes:</b> <?php echo rtrim($size_string,"| ");?> 
 				</span>
 			</div><?
 		}
 		?>
 	</div>
-
 	<p class="footer">@All Rights Reserved By Sham H.</p>
 </div>
-
 </body>
 </html>
