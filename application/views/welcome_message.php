@@ -30,7 +30,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 				?>
 				<h2>
-					<?php echo $photo['title'];?> : <span class="span_size_name" id="h2_<?php echo $photo['id'];?>">Thumbnail Size</span>
+					<?php echo ($photo['title'] == "" ? "Title Not Available" : $photo['title']);?> : 
+					<span class="span_size_name" id="h2_<?php echo $photo['id'];?>">Thumbnail Size</span>
 				</h2>
 				<img class="img_image" id='img_<?php echo $photo['id'];?>' title ="Click Here" src='<?php echo $thumbnail_src;?>'> </br> 
 				<span id="span_<?php echo $photo['id'];?>" class="span_size">
