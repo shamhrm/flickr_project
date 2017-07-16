@@ -75,17 +75,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		foreach($recentphotos as $photo){
 			?><div id="container_inner"><?php
 				$thumbnail_src = "";
+				$size_string = "";
 				foreach($photo['Sizesphotos'] as $sizesphotos){
- 
-				 if($sizesphotos['label'] == "Thumbnail") {
-					$thumbnail_src =  $sizesphotos['source'];
-				 }
+					$size_string .= '<a class="preview" href="JavaScript:Void(0);" id="'.$photo['id'].'" photo_src = "'.$sizesphotos['source'].'" alt = "'.$sizesphotos['label'].'" >'.$sizesphotos['label']. '</a> ('.$sizesphotos['width'].'x'.$sizesphotos['height'].') | ';
+					
+					 if($sizesphotos['label'] == "Thumbnail") {
+						$thumbnail_src =  $sizesphotos['source'];
+					 }
 				 
 				}
 				?>
 				
 				<img class="img_image" src='<?php echo $thumbnail_src;?>'> </br> 
-	
+				<span id="span_<?php echo $photo['id'];?>" class="span_size">
+					<b>Sizes:</b> <?php echo rtrim($size_string,"| ");?> 
+				</span>
 			</div><?
 		}
 		?>
