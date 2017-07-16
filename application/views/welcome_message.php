@@ -72,8 +72,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<div id="body">
 		<?php
-			echo '<pre>';
-			print_r($recentphotos);
+		foreach($recentphotos as $photo){
+			?><div id="container_inner"><?php
+				$thumbnail_src = "";
+				foreach($photo['Sizesphotos'] as $sizesphotos){
+ 
+				 if($sizesphotos['label'] == "Thumbnail") {
+					$thumbnail_src =  $sizesphotos['source'];
+				 }
+				 
+				}
+				?>
+				
+				<img class="img_image" src='<?php echo $thumbnail_src;?>'> </br> 
+	
+			</div><?
+		}
 		?>
 	</div>
 
